@@ -22,7 +22,7 @@ import java.util.ArrayList;
 
 
 public class Activity_Main extends AppCompatActivity {
-    private static final int SECOND_ACTIVITY_REQUEST_CODE = 527;//Snake Case
+    private static final int POPUP_ACTIVITY_REQUEST_CODE = 527;//Snake Case
     private final String TAG = "ActivityMain";//Paskal Case
     public TextView main_LBL_name_1;
     public TextView main_LBL_name_2;
@@ -87,7 +87,7 @@ public class Activity_Main extends AppCompatActivity {
 
 
         // check that it is the SecondActivity with an OK result
-        if (requestCode == SECOND_ACTIVITY_REQUEST_CODE) {
+        if (requestCode == POPUP_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) { // Activity.RESULT_OK
 
                 // get String data from Intent
