@@ -59,14 +59,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:backgroundTint="@color/black"></Button>
+            android:backgroundTint="@color/purple_500"></Button>
             <Button
                 android:id="@+id/end_BTN_exit"
                 android:text="Exit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:backgroundTint="@color/black"></Button>
+                android:backgroundTint="@color/purple_500"></Button>
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

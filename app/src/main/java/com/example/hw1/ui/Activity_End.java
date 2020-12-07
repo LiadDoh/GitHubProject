@@ -9,8 +9,9 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.hw1.R;
+import com.example.hw1.helpers.Base_Activity;
 
-public class Activity_End extends AppCompatActivity {
+public class Activity_End extends Base_Activity {
 
     private TextView end_LBL_winner;
     private TextView end_LBL_score;
@@ -20,7 +21,7 @@ public class Activity_End extends AppCompatActivity {
     private ImageView end_IMG_avatar_2;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_end);
         findViews();
@@ -39,7 +40,7 @@ public class Activity_End extends AppCompatActivity {
     private void initViews() {
         setWinner();
         end_BTN_again.setOnClickListener(v -> {
-            Intent intent = new Intent(Activity_End.this, Activity_Main.class);
+            Intent intent = new Intent(Activity_End.this, Activity_Game.class);
             startActivity(intent);
             finish();
         });

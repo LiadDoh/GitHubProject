@@ -1,38 +1,32 @@
 package com.example.hw1.ui;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
-
 import android.os.Handler;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
-
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
+import com.example.hw1.R;
+import com.example.hw1.helpers.Base_Activity;
 import com.example.hw1.helpers.DeckHelper;
 import com.example.hw1.objects.Card;
-import com.example.hw1.R;
 
 import java.util.ArrayList;
 
 
-public class Activity_Main extends AppCompatActivity {
+public class Activity_Game extends Base_Activity {
     private static final int POPUP_ACTIVITY_REQUEST_CODE = 527;//Snake Case
     private final String TAG = "ActivityMain";//Paskal Case
     public TextView main_LBL_name_1;
     public TextView main_LBL_name_2;
-    public TextView main_LBL_score1;
-    public TextView main_LBL_score2;
+    private ProgressBar main_BAR_progress;
     public Button main_BTN_step;
-    private ImageView main_IMG_avatar_1;
-    public ImageView main_IMG_player_card1;
-    public ImageView main_IMG_player_card2;
-    private ImageView main_IMG_avatar_2;
     private ImageView main_IMG_dice;
     private ArrayList<Card> deck;
     private final char[] LETTERS = {'c', 'd', 'h', 's'};
@@ -40,9 +34,9 @@ public class Activity_Main extends AppCompatActivity {
     private boolean firstClick = true;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_game);
         findViews();
         initViews();
         Log.d(TAG, "onCreate:Start");
@@ -55,30 +49,28 @@ public class Activity_Main extends AppCompatActivity {
         main_LBL_score1 = findViewById(R.id.main_LBL_score1);
         main_LBL_score2 = findViewById(R.id.main_LBL_score2);
         main_BTN_step = findViewById(R.id.main_BTN_step);
-        main_IMG_avatar_1 = findViewById(R.id.main_IMG_avatar_1);
         main_IMG_player_card1 = findViewById(R.id.main_IMG_player_card1);
         main_IMG_player_card2 = findViewById(R.id.main_IMG_player_card2);
-        main_IMG_avatar_2 = findViewById(R.id.main_IMG_avatar_2);
         main_IMG_dice = findViewById(R.id.main_IMG_dice);
+        main_BAR_progress = findViewById(R.id.main_BAR_progress);
     }
 
     public void initViews() {
-        deck = DeckHelper.createDeck(this, deck, LETTERS);
+        deck = DeckHelper.createDeck(this, LETTERS);
         main_BTN_step.setOnClickListener(v -> {
             if (firstClick) {
                 firstClick = false;
                 startPopUpActivity();
-            } else if (deck.isEmpty()) {
-                startEndGameActivity();
             } else {
                 main_BTN_step.setEnabled(false);
                 rollDice();
+
             }
         });
     }
 
     public void startPopUpActivity() {
-        startActivityForResult(new Intent(Activity_Main.this, Activity_Popup.class), 527);
+        startActivityForResult(new Intent(Activity_Game.this, Activity_Popup.class), 527);
     }
 
     @Override
@@ -96,7 +88,7 @@ public class Activity_Main extends AppCompatActivity {
                 // set text view with string
                 main_LBL_name_1.setText(returnString[0]);
                 main_LBL_name_2.setText(returnString[1]);
-                main_BTN_step.setText("Step");
+                main_BTN_step.setText("Start");
             }
         }
     }
@@ -106,12 +98,29 @@ public class Activity_Main extends AppCompatActivity {
         frameAnimation = (AnimationDrawable) main_IMG_dice.getDrawable();
         frameAnimation.start();
         checkIfAnimationDone();
-
     }
 
 
+    private void checkIfAnimationDone() {
+        int timeBetweenChecks = 300;
+        Handler handler = new Handler();
+        handler.postDelayed(() -> {
+            if (frameAnimation.getCurrent() != frameAnimation.getFrame(frameAnimation.getNumberOfFrames() - 1)) {
+                checkIfAnimationDone();
+            } else if (!deck.isEmpty()) {
+                DeckHelper.drawCards(Activity_Game.this, deck);
+                main_BAR_progress.incrementProgressBy(1);
+                rollDice();
+            } else {
+                main_BTN_step.setEnabled(true);
+                main_BTN_step.setText("Finish");
+                main_BTN_step.setOnClickListener(v -> startEndGameActivity());
+            }
+        }, timeBetweenChecks);
+    }
+
     private void startEndGameActivity() {
-        Intent intent = new Intent(Activity_Main.this, Activity_End.class);
+        Intent intent = new Intent(Activity_Game.this, Activity_End.class);
         if (DeckHelper.player1_score > DeckHelper.player2_score) {
             intent.putExtra("winner", new String[]{"1", main_LBL_name_1.getText().toString(), main_LBL_score1.getText().toString()});
         } else if (DeckHelper.player1_score < DeckHelper.player2_score) {
@@ -122,22 +131,6 @@ public class Activity_Main extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
-
-
-    private void checkIfAnimationDone() {
-        int timeBetweenChecks = 300;
-        Handler handler = new Handler();
-        handler.postDelayed(() -> {
-            if (frameAnimation.getCurrent() != frameAnimation.getFrame(frameAnimation.getNumberOfFrames() - 1)) {
-                checkIfAnimationDone();
-            } else {
-                DeckHelper.drawCards(Activity_Main.this, deck);
-                if(deck.isEmpty())
-                    main_BTN_step.setText("Finish!");
-            }
-        }, timeBetweenChecks);
-    }
-
 
     @Override
     protected void onStart() {
