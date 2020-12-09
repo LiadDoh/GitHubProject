@@ -2,12 +2,12 @@ package com.example.hw1.ui;
 
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import com.example.hw1.R;
 import com.example.hw1.helpers.Base_Activity;
 import com.example.hw1.helpers.DeckHelper;
+import com.example.hw1.helpers.UIHelper;
 import com.example.hw1.objects.Card;
 
 import java.util.ArrayList;
@@ -25,21 +26,22 @@ public class Activity_Game extends Base_Activity {
     private final String TAG = "ActivityMain";//Paskal Case
     public TextView main_LBL_name_1;
     public TextView main_LBL_name_2;
-    private ProgressBar main_BAR_progress;
+
     public Button main_BTN_step;
     private ImageView main_IMG_dice;
     private ArrayList<Card> deck;
     private final char[] LETTERS = {'c', 'd', 'h', 's'};
     private AnimationDrawable frameAnimation;
     private boolean firstClick = true;
+    private MediaPlayer shuffle;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+        Log.d(TAG, "onCreate:Start");
         findViews();
         initViews();
-        Log.d(TAG, "onCreate:Start");
     }
 
 
@@ -53,15 +55,21 @@ public class Activity_Game extends Base_Activity {
         main_IMG_player_card2 = findViewById(R.id.main_IMG_player_card2);
         main_IMG_dice = findViewById(R.id.main_IMG_dice);
         main_BAR_progress = findViewById(R.id.main_BAR_progress);
+        claps= MediaPlayer.create(this,R.raw.claps);
+        shuffle= MediaPlayer.create(this,R.raw.shuffle);
     }
 
     public void initViews() {
+        UIHelper.convertIMG(this, R.drawable.aces, main_IMG_player_card1);
+        UIHelper.convertIMG(this, R.drawable.aces, main_IMG_player_card2);
         deck = DeckHelper.createDeck(this, LETTERS);
         main_BTN_step.setOnClickListener(v -> {
             if (firstClick) {
                 firstClick = false;
                 startPopUpActivity();
             } else {
+                if(shuffle.isPlaying())
+                    shuffle.pause();
                 main_BTN_step.setEnabled(false);
                 rollDice();
 
@@ -89,6 +97,7 @@ public class Activity_Game extends Base_Activity {
                 main_LBL_name_1.setText(returnString[0]);
                 main_LBL_name_2.setText(returnString[1]);
                 main_BTN_step.setText("Start");
+                shuffle.start();
             }
         }
     }
@@ -112,6 +121,7 @@ public class Activity_Game extends Base_Activity {
                 main_BAR_progress.incrementProgressBy(1);
                 rollDice();
             } else {
+                claps.start();
                 main_BTN_step.setEnabled(true);
                 main_BTN_step.setText("Finish");
                 main_BTN_step.setOnClickListener(v -> startEndGameActivity());
@@ -137,6 +147,7 @@ public class Activity_Game extends Base_Activity {
         super.onStart();
         DeckHelper.player1_score = 0;
         DeckHelper.player2_score = 0;
+        main_BAR_progress.setProgress(0);
     }
 
     @Override
@@ -152,6 +163,8 @@ public class Activity_Game extends Base_Activity {
     @Override
     protected void onPause() {
         super.onPause();
+        if(claps.isPlaying())
+            claps.pause();
     }
 
     @Override

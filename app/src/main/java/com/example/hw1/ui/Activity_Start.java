@@ -1,9 +1,9 @@
 package com.example.hw1.ui;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
@@ -15,6 +15,8 @@ public class Activity_Start extends Base_Activity {
 
     private Button start_BTN_start_game;
     private Button start_BTN_scoreboard;
+    private MediaPlayer startup;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -26,12 +28,13 @@ public class Activity_Start extends Base_Activity {
 
 
     public void findViews() {
-
+        startup= MediaPlayer.create(this,R.raw.startup);
         start_BTN_start_game = findViewById(R.id.start_BTN_start_game);
         start_BTN_scoreboard = findViewById(R.id.start_BTN_scoreboard);
     }
 
     public void initViews() {
+        startup.start();
         start_BTN_start_game.setOnClickListener(v -> startGame());
         start_BTN_scoreboard.setOnClickListener(v -> showScoreBoard());
 
@@ -67,6 +70,8 @@ public class Activity_Start extends Base_Activity {
     @Override
     protected void onPause() {
         super.onPause();
+        if(startup.isPlaying())
+            startup.pause();
     }
 
     @Override

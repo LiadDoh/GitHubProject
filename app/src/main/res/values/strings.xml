@@ -1,5 +1,7 @@
 <resources>
-    <string name="app_name">HW1</string>
+    <string name="app_name">Ace Of Cards</string>
     <string name="Names">Insert Names</string>
     <string name="player_2">Player 2</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="zero">0</string>
 </resources>

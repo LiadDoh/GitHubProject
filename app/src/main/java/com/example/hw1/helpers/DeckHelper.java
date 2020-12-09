@@ -1,7 +1,9 @@
 package com.example.hw1.helpers;
 
 import android.content.Context;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.example.hw1.objects.Card;
 
 import java.util.ArrayList;
@@ -24,6 +26,7 @@ public class DeckHelper {
             }
         }
         Collections.shuffle(deck);
+        ((Base_Activity) context).main_BAR_progress.setMax(deck.size() / 2);
         return deck;
     }
 
@@ -34,8 +37,8 @@ public class DeckHelper {
         deck.remove(0);
         Card second_card = deck.get(0);
         deck.remove(0);
-        ((Base_Activity) context).main_IMG_player_card1.setImageResource(first_card.getId());
-        ((Base_Activity) context).main_IMG_player_card2.setImageResource(second_card.getId());
+        UIHelper.convertIMG(context,first_card.getId(), ((Base_Activity) context).main_IMG_player_card1);
+        UIHelper.convertIMG(context,second_card.getId(), ((Base_Activity) context).main_IMG_player_card2);
         if (first_card.getValue() > second_card.getValue()) {
             player1_score++;
             ((Base_Activity) context).main_LBL_score1.setText("" + player1_score);
@@ -44,5 +47,6 @@ public class DeckHelper {
             ((Base_Activity) context).main_LBL_score2.setText("" + player2_score);
         }
     }
+
 
 }
