@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
-    tools:context=".ui.Activity_End">
+    tools:context=".ui.Activity_Winner">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -13,7 +13,6 @@
         android:gravity="center"
         android:orientation="vertical"
         android:padding="30dp"
-
         >
 
         <TextView
@@ -59,6 +58,15 @@
             android:orientation="horizontal">
 
             <Button
+                android:id="@+id/end_BTN_add_player"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:backgroundTint="@color/purple_500"
+                android:text="Add Player"
+                android:textSize="20dp" />
+
+            <Button
                 android:id="@+id/end_BTN_again"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -67,12 +75,12 @@
                 android:text="Again?" />
 
             <Button
-                android:id="@+id/end_BTN_exit"
+                android:id="@+id/end_BTN_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
                 android:backgroundTint="@color/purple_500"
-                android:text="Exit" />
+                android:text="Back" />
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

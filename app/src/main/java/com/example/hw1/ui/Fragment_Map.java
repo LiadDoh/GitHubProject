@@ -9,10 +9,16 @@ import androidx.fragment.app.Fragment;
 
 import com.example.hw1.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapFragment extends Fragment {
+public class Fragment_Map extends Fragment implements OnMapReadyCallback {
+    Marker marker;
+    GoogleMap myGoogleMap;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -22,21 +28,20 @@ public class MapFragment extends Fragment {
         SupportMapFragment supportMapFragment = (SupportMapFragment)
                 getChildFragmentManager().findFragmentById(R.id.google_map);
         //Async map
-        supportMapFragment.getMapAsync(googleMap -> googleMap.setOnMapClickListener(latLng -> {
-            //When clicked on map
-            //Initialize marker options
-            MarkerOptions markerOptions = new MarkerOptions();
-            //Set position of marker
-            markerOptions.position(latLng);
-            //Set title of marker
-            markerOptions.title(latLng.latitude + " : " + latLng.longitude);
-            //Remove all marker
-            googleMap.clear();
-            //Animating to zoom the marker
-            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
-            //Add marker on map
-            googleMap.addMarker(markerOptions);
-        }));
+        assert supportMapFragment != null;
+        supportMapFragment.getMapAsync(this);
         return view;
+    }
+
+    public void showLocationOnMap(double lat, double lon) {
+        myGoogleMap.clear();
+        LatLng latLng = new LatLng(lat, lon);
+        marker = myGoogleMap.addMarker(new MarkerOptions().position(latLng).title("Known Location"));
+        myGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,10));
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        myGoogleMap=googleMap;
     }
 }

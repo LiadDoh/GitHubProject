@@ -10,11 +10,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class Base_Activity extends AppCompatActivity {
 
-    public ImageView main_IMG_player_card1;
-    public ImageView main_IMG_player_card2;
-    public TextView main_LBL_score1;
-    public TextView main_LBL_score2;
-    public ProgressBar main_BAR_progress;
+    public ImageView game_IMG_player_card1;
+    public ImageView game_IMG_player_card2;
+    public TextView game_LBL_score1;
+    public TextView game_LBL_score2;
+    public ProgressBar game_BAR_progress;
     public MediaPlayer claps;
     public MediaPlayer triumphal;
     @Override

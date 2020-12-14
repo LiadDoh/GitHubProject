@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -31,7 +32,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".ui.Activity_End"
+            android:name=".ui.Activity_Winner"
             android:screenOrientation="landscape" />
         <activity
             android:name=".ui.Activity_Start"
@@ -50,7 +51,7 @@
             android:name=".ui.Activity_Game"
             android:screenOrientation="landscape"></activity>
         <activity
-            android:name=".ui.Activity_Score"
+            android:name=".ui.Activity_ScoreBoard"
             android:screenOrientation="landscape" />
     </application>
 

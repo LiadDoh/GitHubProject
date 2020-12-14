@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
-    tools:context=".ui.Activity_End">
+    tools:context=".ui.Activity_Winner">
 
     <LinearLayout
         android:layout_width="wrap_content"

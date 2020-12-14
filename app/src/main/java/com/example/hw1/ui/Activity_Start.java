@@ -22,8 +22,10 @@ public class Activity_Start extends Base_Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
+
         findViews();
         initViews();
+
     }
 
 
@@ -41,8 +43,9 @@ public class Activity_Start extends Base_Activity {
     }
 
     private void showScoreBoard() {
-        Intent intent = new Intent(this, Activity_Score.class);
+        Intent intent = new Intent(this, Activity_ScoreBoard.class);
         startActivity(intent);
+        finish();
     }
 
     private void startGame() {
