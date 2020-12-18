@@ -5,7 +5,7 @@ import java.util.Collections;
 
 public class TopTen {
 
-    public ArrayList<Player> players;
+    public ArrayList<Player> players=new ArrayList<Player>();;
 
     public TopTen() {
     }
@@ -15,19 +15,19 @@ public class TopTen {
     }
 
 
-    public void addPlayer(Player player) {
+    public static void addPlayer(TopTen topTen, Player player) {
         int max = 10;
-        if (players.size() == max) {
-            Player temp = players.get(max - 1);
+        if (topTen.players.size() == max) {
+            Player temp = topTen.players.get(max - 1);
             if (temp.getScore() >= player.getScore())
                 return;
             else {
-                players.remove(max - 1);
-                players.add(player);
+                topTen.players.remove(max - 1);
+                topTen.players.add(player);
             }
 
         } else
-            players.add(player);
-        players.sort(Collections.reverseOrder());
+            topTen.players.add(player);
+        topTen.players.sort(Collections.reverseOrder());
     }
 }

@@ -14,7 +14,7 @@ import androidx.core.content.ContextCompat;
 
 import com.example.hw1.R;
 import com.example.hw1.helpers.Base_Activity;
-import com.example.hw1.helpers.LocationHelper;
+import com.example.hw1.helpers.ScoreBoardHelper;
 import com.example.hw1.helpers.UIHelper;
 
 public class Activity_Winner extends Base_Activity  {
@@ -67,7 +67,7 @@ public class Activity_Winner extends Base_Activity  {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 String[] returnString = getIntent().getStringArrayExtra("winner");
                 end_BTN_add_player.setEnabled(false);
-                LocationHelper.getLocation(this,returnString);
+                ScoreBoardHelper.getLocation(this,returnString);
             } else {
                 ActivityCompat.requestPermissions(this, new String[]{
                         Manifest.permission.ACCESS_FINE_LOCATION}, 44);

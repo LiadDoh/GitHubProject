@@ -21,7 +21,7 @@ import static com.example.hw1.helpers.Constants.SP_FILE;
 import static com.example.hw1.helpers.Constants.TOP_TEN;
 
 
-public class LocationHelper {
+public class ScoreBoardHelper {
     public final static int REQUEST_CODE = 101;
 
     public static void getLocation(Context context, String[] arr) {
@@ -47,7 +47,7 @@ public class LocationHelper {
         TopTen topTenList = generateData(prefs, gson);
         if (topTenList == null)
             topTenList = new TopTen();
-        topTenList.addPlayer(player);
+        TopTen.addPlayer(topTenList,player);
         String json = gson.toJson(topTenList);
         editor.putString(TOP_TEN, json);
         editor.apply();

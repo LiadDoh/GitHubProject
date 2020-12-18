@@ -16,7 +16,7 @@ import com.example.hw1.objects.Player;
 import com.example.hw1.objects.TopTen;
 import com.google.gson.Gson;
 
-import java.util.Collections;
+import java.util.ArrayList;
 
 import static android.content.Context.MODE_PRIVATE;
 import static com.example.hw1.helpers.Constants.SP_FILE;
@@ -38,12 +38,13 @@ public class Fragment_List extends Fragment {
         list_view = (ListView) view.findViewById(R.id.list_view);
         SharedPreferences prefs = getContext().getSharedPreferences(SP_FILE, MODE_PRIVATE);
         Gson gson = new Gson();
+        ArrayAdapter arrayAdapter;
         TopTen topTenList = generateData(prefs, gson);
         if (topTenList == null)
             topTenList = new TopTen();
-        ArrayAdapter arrayAdapter = new ArrayAdapter(view.getContext(), android.R.layout.simple_list_item_1, topTenList.getRecords());
-        topTenList.players.sort(Collections.reverseOrder());
+        arrayAdapter = new ArrayAdapter(view.getContext(), android.R.layout.simple_list_item_1, topTenList.getRecords());
         list_view.setAdapter(arrayAdapter);
+
         initViews();
         return view;
     }
